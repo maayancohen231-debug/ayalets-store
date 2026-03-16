@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>איילת'ס — אומנות בעבודת יד</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Heebo:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #FAF7F2;
+    --cream-dark: #F0EBE0;
+    --warm-gray: #E5DED0;
+    --taupe: #C8BCA8;
+    --brown-light: #A0906E;
+    --brown: #6B5A3E;
+    --brown-dark: #3D2E1A;
+    --text-main: #2A2118;
+    --text-muted: #7A6A54;
+    --text-light: #A89880;
+    --accent: #8B6914;
+    --border: rgba(107, 90, 62, 0.18);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: var(--cream);
+    color: var(--text-main);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; right: 0; left: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.25rem 4rem;
+    background: rgba(250, 247, 242, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px; font-weight: 400;
+    color: var(--text-main); text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+  .nav-logo span { font-style: italic; color: var(--accent); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 13px; font-weight: 300; letter-spacing: 0.06em;
+    color: var(--text-muted); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text-main); }
+  .nav-cart {
+    font-size: 13px; font-weight: 400; color: var(--text-muted);
+    cursor: pointer; letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .nav-cart:hover { color: var(--text-main); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    padding-top: 72px;
+  }
+  .hero-text {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 5rem 4rem 5rem 5rem;
+    animation: fadeUp 0.9s ease both;
+  }
+  .hero-eyebrow {
+    font-size: 11px; font-weight: 400; letter-spacing: 0.18em;
+    color: var(--accent); text-transform: uppercase;
+    margin-bottom: 1.75rem;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 5vw, 64px);
+    font-weight: 400; line-height: 1.15;
+    color: var(--text-main); margin-bottom: 1.75rem;
+  }
+  .hero-title em { font-style: italic; color: var(--brown-light); }
+  .hero-sub {
+    font-size: 15px; font-weight: 300;
+    color: var(--text-muted); line-height: 1.9;
+    max-width: 400px; margin-bottom: 3rem;
+  }
+  .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-dark {
+    padding: 13px 34px; background: var(--brown-dark); color: var(--cream);
+    font-family: 'Heebo', sans-serif; font-size: 13px; font-weight: 400;
+    letter-spacing: 0.08em; text-decoration: none; border: none; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-dark:hover { background: var(--brown); }
+  .btn-outline {
+    padding: 12px 34px; background: transparent; color: var(--text-main);
+    font-family: 'Heebo', sans-serif; font-size: 13px; font-weight: 400;
+    letter-spacing: 0.08em; text-decoration: none;
+    border: 0.5px solid var(--brown-dark); cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-outline:hover { background: var(--brown-dark); color: var(--cream); }
+
+  .hero-image {
+    background: var(--warm-gray);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; position: relative;
+    animation: fadeIn 1.2s ease both 0.2s;
+  }
+  /* ── להחליף את ה-src בתמונה שלך ── */
+  .hero-image img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .hero-placeholder {
+    width: 100%; height: 100%; min-height: 500px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 1rem; color: var(--taupe);
+  }
+  .hero-placeholder svg { opacity: 0.5; }
+  .hero-placeholder p { font-size: 13px; font-weight: 300; letter-spacing: 0.06em; }
+
+  /* ── MARQUEE ── */
+  .marquee-wrap {
+    background: var(--brown-dark); color: var(--taupe);
+    padding: 0.9rem 0; overflow: hidden;
+  }
+  .marquee-track {
+    display: flex; gap: 3rem; width: max-content;
+    animation: marquee 22s linear infinite;
+  }
+  .marquee-item {
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    white-space: nowrap; font-weight: 300;
+  }
+  .marquee-dot { color: var(--accent); }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ── SECTIONS ── */
+  section { padding: 6rem 4rem; }
+  .section-eyebrow {
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 3vw, 40px); font-weight: 400;
+    color: var(--text-main); margin-bottom: 3rem; line-height: 1.2;
+  }
+  .section-title em { font-style: italic; color: var(--brown-light); }
+
+  /* ── CATEGORIES ── */
+  .categories { background: var(--cream); }
+  .cat-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem;
+  }
+  .cat-card { cursor: pointer; }
+  .cat-card:hover .cat-img { transform: scale(1.02); }
+  .cat-img-wrap {
+    overflow: hidden; aspect-ratio: 3/4; background: var(--warm-gray);
+    margin-bottom: 1rem;
+  }
+  .cat-img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.5s ease;
+    display: block;
+  }
+  /* placeholder כשאין תמונה */
+  .cat-img-ph {
+    width: 100%; height: 100%; min-height: 200px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--warm-gray); color: var(--taupe);
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    transition: background 0.3s;
+  }
+  .cat-card:hover .cat-img-ph { background: var(--warm-gray); filter: brightness(0.95); }
+  .cat-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px; font-weight: 400; color: var(--text-main);
+    margin-bottom: 0.3rem;
+  }
+  .cat-count { font-size: 12px; font-weight: 300; color: var(--text-light); }
+
+  /* ── FEATURED ── */
+  .featured { background: var(--cream-dark); }
+  .featured-grid {
+    display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 1.5rem;
+  }
+  .product-card { background: var(--cream); cursor: pointer; }
+  .product-card:hover .prod-img { transform: scale(1.03); }
+  .prod-img-wrap { overflow: hidden; background: var(--warm-gray); }
+  .prod-img-wrap.tall { height: 460px; }
+  .prod-img-wrap.short { height: 215px; }
+  .prod-img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform 0.5s ease;
+  }
+  .prod-img-ph {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--warm-gray); color: var(--taupe);
+    font-size: 11px; letter-spacing: 0.1em;
+  }
+  .prod-info { padding: 1rem 1.25rem; }
+  .prod-badge {
+    display: inline-block; font-size: 10px; letter-spacing: 0.12em;
+    text-transform: uppercase; background: var(--warm-gray);
+    color: var(--text-muted); padding: 3px 8px; margin-bottom: 0.5rem;
+  }
+  .prod-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 400; color: var(--text-main);
+    margin-bottom: 0.35rem;
+  }
+  .prod-price { font-size: 14px; font-weight: 300; color: var(--text-muted); }
+  .prod-col { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  /* ── ABOUT ── */
+  .about {
+    background: var(--cream);
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 6rem; align-items: center;
+    padding: 7rem 4rem;
+  }
+  .about-img-wrap {
+    aspect-ratio: 4/5; background: var(--warm-gray);
+    overflow: hidden; position: relative;
+  }
+  .about-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .about-img-ph {
+    width: 100%; height: 100%; min-height: 400px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--taupe); font-size: 13px; letter-spacing: 0.06em;
+  }
+  .about-body {
+    font-size: 15px; font-weight: 300; color: var(--text-muted);
+    line-height: 1.95; margin-bottom: 1.75rem;
+  }
+  .about-sig {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-style: italic; color: var(--brown-light);
+    margin-top: 2rem;
+  }
+
+  /* ── CONTACT ── */
+  .contact {
+    background: var(--cream-dark);
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: start;
+    padding: 6rem 4rem;
+  }
+  .contact-info .section-title { margin-bottom: 1.5rem; }
+  .contact-detail {
+    font-size: 14px; font-weight: 300; color: var(--text-muted);
+    line-height: 1.9; margin-bottom: 2rem;
+  }
+  .contact-link {
+    display: block; font-size: 14px; font-weight: 400;
+    color: var(--accent); text-decoration: none; margin-bottom: 0.5rem;
+    transition: opacity 0.2s;
+  }
+  .contact-link:hover { opacity: 0.7; }
+  .form-group { margin-bottom: 1.25rem; }
+  .form-label {
+    display: block; font-size: 11px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--text-muted);
+    margin-bottom: 0.5rem; font-weight: 400;
+  }
+  .form-input, .form-textarea {
+    width: 100%; padding: 12px 14px;
+    background: var(--cream); border: 0.5px solid var(--border);
+    font-family: 'Heebo', sans-serif; font-size: 14px; font-weight: 300;
+    color: var(--text-main); outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-textarea:focus {
+    border-color: var(--brown-light);
+  }
+  .form-textarea { resize: vertical; min-height: 130px; }
+  .form-submit {
+    width: 100%; padding: 14px;
+    background: var(--brown-dark); color: var(--cream);
+    font-family: 'Heebo', sans-serif; font-size: 13px;
+    letter-spacing: 0.1em; border: none; cursor: pointer;
+    transition: background 0.2s; margin-top: 0.5rem;
+  }
+  .form-submit:hover { background: var(--brown); }
+  .form-success {
+    display: none; padding: 14px; text-align: center;
+    background: var(--warm-gray); font-size: 13px;
+    color: var(--text-muted); letter-spacing: 0.04em;
+    margin-top: 1rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--brown-dark); color: var(--taupe);
+    padding: 3.5rem 4rem 2rem;
+    display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 3rem;
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px; font-weight: 400;
+    color: var(--cream); margin-bottom: 0.75rem;
+  }
+  .footer-logo span { font-style: italic; color: #C8A84A; }
+  .footer-tagline {
+    font-size: 13px; font-weight: 300; color: #888060;
+    line-height: 1.7;
+  }
+  .footer-col h4 {
+    font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--cream); font-weight: 400; margin-bottom: 1.25rem;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li {
+    font-size: 13px; font-weight: 300; color: #888060;
+    margin-bottom: 0.6rem; cursor: pointer; transition: color 0.2s;
+  }
+  .footer-col li:hover { color: var(--cream); }
+  .footer-bottom {
+    background: #1E1508;
+    padding: 1rem 4rem;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 11px; color: #5A4E38;
+    border-top: 0.5px solid rgba(255,255,255,0.06);
+  }
+
+  /* ── DIVIDER ── */
+  hr { border: none; border-top: 0.5px solid var(--border); margin: 0 4rem; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-text { padding: 3rem 1.5rem; }
+    .hero-image { min-height: 360px; }
+    section { padding: 4rem 1.5rem; }
+    .cat-grid { grid-template-columns: repeat(2, 1fr); }
+    .featured-grid { grid-template-columns: 1fr; }
+    .prod-img-wrap.tall, .prod-img-wrap.short { height: 260px; }
+    .about { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 2rem; }
+    .contact { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 2rem; }
+    footer { grid-template-columns: 1fr 1fr; padding: 2.5rem 1.5rem; }
+    .footer-bottom { padding: 1rem 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+    hr { margin: 0 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════ NAV ═══════════════════════ -->
+<nav>
+  <a class="nav-logo" href="#">איילת<span>'ס</span></a>
+  <ul class="nav-links">
+    <li><a href="#shop">חנות</a></li>
+    <li><a href="#featured">פריטים נבחרים</a></li>
+    <li><a href="#about">אודות</a></li>
+    <li><a href="#contact">צור קשר</a></li>
+  </ul>
+  <div class="nav-cart">🛒 סל קניות</div>
+</nav>
+
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<div class="hero">
+  <div class="hero-text">
+    <p class="hero-eyebrow">אומנות בעבודת יד · מישראל</p>
+    <h1 class="hero-title">
+      יצירה<br>
+      שמדברת<br>
+      <em>אל הלב</em>
+    </h1>
+    <p class="hero-sub">
+      כל פריט בסטודיו של איילת נוצר ביד, מתוך אהבה לחומרים ולפרטים הקטנים.
+      עבודות עץ, גלויות, פוסטרים ועוד — ליצירה שמרגישה בבית.
+    </p>
+    <div class="btn-row">
+      <a class="btn-dark" href="#shop">לחנות המלאה</a>
+      <a class="btn-outline" href="#about">הסיפור שלי</a>
+    </div>
+  </div>
+  <div class="hero-image">
+    <!--
+      כדי להוסיף תמונה — החליפי את הקוד הבא:
+      <div class="hero-placeholder">...</div>
+      ב:
+      <img src="תמונה-שלך.jpg" alt="הסטודיו של איילת">
+    -->
+    <div class="hero-placeholder">
+      <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+        <rect x="12" y="8" width="40" height="50" rx="1" stroke="#C8BCA8" stroke-width="1"/>
+        <rect x="18" y="14" width="28" height="28" rx="1" stroke="#C8BCA8" stroke-width="0.8"/>
+        <circle cx="32" cy="28" r="9" stroke="#C8BCA8" stroke-width="0.8"/>
+        <rect x="22" y="48" width="20" height="4" rx="0.5" fill="#C8BCA8" opacity="0.6"/>
+      </svg>
+      <p>תמונה ראשית — להחליף</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ MARQUEE ═══════════════════════ -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">עבודות עץ</span>
+    <span class="marquee-dot">✦</span>
+    <span class="marquee-item">גלויות</span>
+    <span class="marquee-dot">✦</span>
+    <span class="marquee-item">סימניות</span>
+    <span class="marquee-dot">✦</span>
+    <span class="marquee-item">פוסטרים על קנבס</span>
+    <span class="marquee-dot">✦</span>
+    <span class="marquee-item">ברכות בפריים</span>
+    <span class="marquee-dot">✦</span>
+    <span class="marquee-item">בעבודת יד</span>
+    <span class="marquee-dot">✦</span>
+    <span class="marquee-item">מישראל עם אהבה</span>
+    <span class="marquee-dot">✦</span>
+    <!-- כפול לאפקט marquee רציף -->
+    <span class="marquee-item">עבודות עץ</span>
+    <span class="marquee-dot">✦</span>
+    <span class="marquee-item">גלויות</span>
+    <span class="marquee-dot">✦</span>
+    <span class="marquee-item">סימניות</span>
+    <span class="marquee-dot">✦</span>
+    <span class="marquee-item">פוסטרים על קנבס</span>
+    <span class="marquee-dot">✦</span>
+    <span class="marquee-item">ברכות בפריים</span>
+    <span class="marquee-dot">✦</span>
+    <span class="marquee-item">בעבודת יד</span>
+    <span class="marquee-dot">✦</span>
+    <span class="marquee-item">מישראל עם אהבה</span>
+    <span class="marquee-dot">✦</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════ CATEGORIES ═══════════════════════ -->
+<section class="categories" id="shop">
+  <p class="section-eyebrow">קולקציות</p>
+  <h2 class="section-title">מה תמצאו<br><em>בחנות</em></h2>
+  <div class="cat-grid">
+
+    <div class="cat-card">
+      <div class="cat-img-wrap">
+        <!--
+          להוסיף תמונה:
+          <img class="cat-img" src="עבודות-עץ.jpg" alt="עבודות עץ">
+        -->
+        <div class="cat-img-ph">תמונה — עבודות עץ</div>
+      </div>
+      <p class="cat-name">עבודות עץ</p>
+      <p class="cat-count">פריטים ייחודיים מעץ טבעי</p>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-img-wrap">
+        <div class="cat-img-ph">תמונה — גלויות</div>
+      </div>
+      <p class="cat-name">גלויות</p>
+      <p class="cat-count">עיצוב עדין לכל אירוע</p>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-img-wrap">
+        <div class="cat-img-ph">תמונה — סימניות</div>
+      </div>
+      <p class="cat-name">סימניות</p>
+      <p class="cat-count">לאוהבי ספרים</p>
+    </div>
+
+    <div class="cat-card">
+      <div class="cat-img-wrap">
+        <div class="cat-img-ph">תמונה — פוסטרים</div>
+      </div>
+      <p class="cat-name">פוסטרים על קנבס</p>
+      <p class="cat-count">הדפסות אמנותיות לבית</p>
+    </div>
+
+  </div>
+</section>
+
+<hr>
+
+<!-- ═══════════════════════ FEATURED ═══════════════════════ -->
+<section class="featured" id="featured">
+  <p class="section-eyebrow">פריטים נבחרים</p>
+  <h2 class="section-title">חדש<br><em>בסטודיו</em></h2>
+  <div class="featured-grid">
+
+    <!-- מוצר גדול -->
+    <div class="product-card">
+      <div class="prod-img-wrap tall">
+        <!--
+          להוסיף תמונה:
+          <img class="prod-img" src="מוצר1.jpg" alt="פוסטר בוטני">
+        -->
+        <div class="prod-img-ph">תמונה — מוצר ראשי</div>
+      </div>
+      <div class="prod-info">
+        <span class="prod-badge">חדש</span>
+        <p class="prod-name">פוסטר בוטני על קנבס</p>
+        <p class="prod-price">₪ 180</p>
+      </div>
+    </div>
+
+    <!-- עמודה שמאל -->
+    <div class="prod-col">
+      <div class="product-card">
+        <div class="prod-img-wrap short">
+          <div class="prod-img-ph">תמונה — מוצר 2</div>
+        </div>
+        <div class="prod-info">
+          <p class="prod-name">ברכת יום הולדת בפריים</p>
+          <p class="prod-price">₪ 95</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="prod-img-wrap short">
+          <div class="prod-img-ph">תמונה — מוצר 3</div>
+        </div>
+        <div class="prod-info">
+          <p class="prod-name">סימניה — עץ זית חרוט</p>
+          <p class="prod-price">₪ 55</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- עמודה ימין -->
+    <div class="prod-col">
+      <div class="product-card">
+        <div class="prod-img-wrap short">
+          <div class="prod-img-ph">תמונה — מוצר 4</div>
+        </div>
+        <div class="prod-info">
+          <span class="prod-badge">פופולרי</span>
+          <p class="prod-name">לוח עץ בעבודת יד</p>
+          <p class="prod-price">₪ 220</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="prod-img-wrap short">
+          <div class="prod-img-ph">תמונה — מוצר 5</div>
+        </div>
+        <div class="prod-info">
+          <p class="prod-name">סט גלויות — 6 עיצובים</p>
+          <p class="prod-price">₪ 75</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════ ABOUT ═══════════════════════ -->
+<div class="about" id="about">
+  <div class="about-img-wrap">
+    <!--
+      להוסיף תמונה שלך:
+      <img class="about-img" src="תמונה-שלי.jpg" alt="איילת">
+    -->
+    <div class="about-img-ph">תמונה שלך — להחליף</div>
+  </div>
+  <div class="about-text">
+    <p class="section-eyebrow">הסיפור שלי</p>
+    <h2 class="section-title">
+      אומנות<br>
+      שנולדת<br>
+      <em>מהלב</em>
+    </h2>
+    <p class="about-body">
+      כל פריט בסטודיו נוצר ביד, עם תשומת לב לכל פרט קטן. מעבודות עץ מגולפות ועד גלויות צבעוניות — כל יצירה מביאה חמימות ויופי לחיי היומיום.
+    </p>
+    <p class="about-body">
+      <!--
+        ✏️ כאן תוסיפי את הסיפור האישי שלך!
+        למשל: מתי התחלת, מה מעורר בך השראה, מה מיוחד בעבודה שלך.
+      -->
+      אני מאמינה שאומנות לא צריכה להישאר רק במוזיאונים — היא שייכת לכל בית, לכל שולחן, לכל לב.
+    </p>
+    <div class="about-sig">— איילת</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ CONTACT ═══════════════════════ -->
+<div class="contact" id="contact">
+  <div class="contact-info">
+    <p class="section-eyebrow">צור קשר</p>
+    <h2 class="section-title">
+      שמחה<br>
+      <em>לשמוע</em><br>
+      ממך
+    </h2>
+    <p class="contact-detail">
+      רוצה לשאול על מוצר? מעוניינת בהזמנה מותאמת אישית?<br>
+      כתבי לי — אחזור אלייך תוך יום עסקים.
+    </p>
+    <!--
+      ✏️ עדכני את פרטי הקשר שלך:
+    -->
+    <a class="contact-link" href="mailto:ayelet@example.com">ayelet@example.com</a>
+    <a class="contact-link" href="https://instagram.com/" target="_blank">@ayelets_art</a>
+    <a class="contact-link" href="https://wa.me/972500000000" target="_blank">WhatsApp</a>
+  </div>
+  <div class="contact-form">
+    <form id="contactForm">
+      <div class="form-group">
+        <label class="form-label">שם</label>
+        <input class="form-input" type="text" placeholder="השם שלך" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">אימייל</label>
+        <input class="form-input" type="email" placeholder="האימייל שלך" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">הודעה</label>
+        <textarea class="form-textarea" placeholder="מה תרצי לשאול?" required></textarea>
+      </div>
+      <button class="form-submit" type="submit">שליחת הודעה</button>
+      <div class="form-success" id="formSuccess">
+        ✓ תודה! קיבלתי את הודעתך ואחזור אלייך בקרוב.
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<footer>
+  <div>
+    <div class="footer-logo">איילת<span>'ס</span></div>
+    <p class="footer-tagline">אומנות בעבודת יד<br>מישראל, עם אהבה</p>
+  </div>
+  <div class="footer-col">
+    <h4>ניווט</h4>
+    <ul>
+      <li onclick="location.href='#shop'">חנות</li>
+      <li onclick="location.href='#featured'">פריטים נבחרים</li>
+      <li onclick="location.href='#about'">אודות</li>
+      <li onclick="location.href='#contact'">צור קשר</li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>קולקציות</h4>
+    <ul>
+      <li>עבודות עץ</li>
+      <li>גלויות</li>
+      <li>סימניות</li>
+      <li>פוסטרים על קנבס</li>
+      <li>ברכות בפריים</li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>מידע</h4>
+    <ul>
+      <li>משלוחים</li>
+      <li>הזמנות אישיות</li>
+      <li>מדיניות החזרות</li>
+      <li onclick="location.href='https://instagram.com'">אינסטגרם</li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <span>© 2025 איילת'ס — כל הזכויות שמורות</span>
+  <span>עוצב עם אהבה · ישראל</span>
+</div>
+
+<script>
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    document.getElementById('formSuccess').style.display = 'block';
+    this.reset();
+    setTimeout(() => {
+      document.getElementById('formSuccess').style.display = 'none';
+    }, 5000);
+  });
+</script>
+</body>
+</html>
